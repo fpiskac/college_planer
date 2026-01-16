@@ -1,9 +1,9 @@
 <template>
-  <!--prikaz predemta, bodova i mogućnost dodavanja novih-->
+  <!--prikaz predmeta, bodova i mogućnost dodavanja novih-->
   <div>
     <h2>Moji predmeti</h2>
     <p v-if="loading">Učitavanje predmeta...</p>
-
+    <!--renderiranje kartica iz komponenti za svaki predmet-->
     <SubjectCard
       v-for="subject in subjectsWithPoints"
       :key="subject.id"
@@ -53,7 +53,7 @@ const subjectsWithPoints = computed(() => {
       (sum, task) => sum + task.points,
       0
     )
-
+//vraća sve u objektu subject kao što je bilo + trenutne bodove
     return {
       ...subject,
       currentPoints

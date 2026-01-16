@@ -12,7 +12,7 @@ export const useSubjectsStore = defineStore('subjects', {
       return new Promise((resolve) => { //simulacija API poziva bazi s malim delayom
         setTimeout(() => {
           const data = localStorage.getItem(STORAGE_KEY)
-          //ako ima podataka postavi ih u subjects, ako nema hardkodiraj
+          //ako ima podataka u localStorage postavi ih u subjects, ako nema hardkodiraj
           if (data) {
             this.subjects = JSON.parse(data)
           } else {
@@ -45,7 +45,7 @@ export const useSubjectsStore = defineStore('subjects', {
       //nađi za koji predmet je namijenjen zadatak
       const subject = this.subjects.find(s => s.id === subjectId) 
       if (!subject) return
-
+      //pushaj u todo listu predmeta
       subject.todos.push({
         id: Date.now(),
         text,
@@ -54,6 +54,7 @@ export const useSubjectsStore = defineStore('subjects', {
 
       this.saveSubjects()
     },
+    //ažuriranje bodova po zadatku
     updateTaskPoints(subjectId, taskId, points) {
       const subject = this.subjects.find(s => s.id === subjectId)
       if (!subject) return
@@ -64,6 +65,7 @@ export const useSubjectsStore = defineStore('subjects', {
       task.points = points
       this.saveSubjects()
     },
+    //dodavanje predmeta
     addSubject(name) {
     this.subjects.push({
       id: Date.now(),
@@ -74,6 +76,7 @@ export const useSubjectsStore = defineStore('subjects', {
 
     this.saveSubjects()
   },
+  //dodavanje zadatka
     async addTask(subjectId, name, max) {
       return new Promise(resolve => {
         setTimeout(() => {
